@@ -696,28 +696,36 @@ install_geodata() {
       exit 1
     fi
   }
-  local download_link_geoip="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
-  local download_link_geosite="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
-  local file_ip='geoip.dat'
-  local file_dlc='geosite.dat'
-  local file_site='geosite.dat'
+  # 修改为新的下载链接
+  local download_link_geoip="https://github.com/caiysmy/geoip/releases/latest/download/geoip-only-cn-private.dat"
+  local download_link_geosite="https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"
+  local file_ip='geoip-only-cn-private.dat'  # 新的 geoip 文件名
+  local file_dlc='dlc.dat'  # 新的 geosite 文件名
+  local file_site='geosite.dat'  # 要安装的目标文件名
   local dir_tmp
   dir_tmp="$(mktemp -d)"
   [[ "$XRAY_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '0' ]] && echo "warning: Xray was not installed"
+  # 下载文件及其校验文件
   download_geodata $download_link_geoip $file_ip
-  download_geodata $download_link_geosite $file_dlc
-  cd "${dir_tmp}" || exit
+  download_geodata $download_link_geosite $file_dlc 
+  cd "${dir_tmp}" || exit 
+  # 校验文件的 sha256sum
   for i in "${dir_tmp}"/*.sha256sum; do
     if ! sha256sum -c "${i}"; then
       echo 'error: Check failed! Please check your network or try again.'
       exit 1
     fi
   done
-  cd - >/dev/null || exit 1
+  # 重命名文件
+  mv -f "${dir_tmp}/${file_dlc}" "${dir_tmp}/${file_site}"
+  mv -f "${dir_tmp}/${file_ip}" "${dir_tmp}/geoip.dat"
+  # 安装文件到目标路径
   install -d "$DAT_PATH"
-  install -m 644 "${dir_tmp}"/${file_dlc} "${DAT_PATH}"/${file_site}
-  install -m 644 "${dir_tmp}"/${file_ip} "${DAT_PATH}"/${file_ip}
+  install -m 644 "${dir_tmp}/${file_site}" "${DAT_PATH}/${file_site}"
+  install -m 644 "${dir_tmp}/geoip.dat" "${DAT_PATH}/geoip.dat"
+  # 清理临时文件夹
   rm -r "${dir_tmp}"
+  echo "done: geoip.dat and geosite.dat are placed in $DAT_PATH"
   exit 0
 }
 
