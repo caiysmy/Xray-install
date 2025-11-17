@@ -32,13 +32,13 @@
 **安装并升级 Xray-core 和地理数据，默认使用 `User=nobody`，但不会覆盖已有服务文件中的 `User` 设置**
 
 ```
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+bash -c "$(curl -L https://github.com/caiysmy/Xray-install/raw/main/install-release.sh)" @ install
 ```
 
 **仅更新 geoip.dat 和 geosite.dat**
 
 ```
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
+bash -c "$(curl -L https://github.com/caiysmy/Xray-install/raw/main/install-release.sh)" @ install-geodata
 ```
 
 **移除 Xray，但保留 json 配置文件和日志**
@@ -52,13 +52,13 @@ bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release
 **安装并升级 Xray-core 到预发布版本**
 
 ```
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta
+bash -c "$(curl -L https://github.com/caiysmy/Xray-install/raw/main/install-release.sh)" @ install --beta
 ```
 
 **安装并升级 Xray-core 和地理数据，并启用 `logrotate`，`$time` 可以是 12:34:56 格式的时间**
 
 ```
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --logrotate $time
+bash -c "$(curl -L https://github.com/caiysmy/Xray-install/raw/main/install-release.sh)" @ install --logrotate $time
 ```
 
 ```
@@ -71,13 +71,13 @@ bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release
 **安装并升级 Xray-core 和地理数据，使用 `User=root`，会覆盖已有服务文件中的 `User` 设置**
 
 ```
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+bash -c "$(curl -L https://github.com/caiysmy/Xray-install/raw/main/install-release.sh)" @ install -u root
 ```
 
 **安装并升级 Xray-core，但不包含地理数据**
 
 ```
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --without-geodata
+bash -c "$(curl -L https://github.com/caiysmy/Xray-install/raw/main/install-release.sh)" @ install --without-geodata
 ```
 
 **移除 Xray，包括 json 配置文件和日志**
