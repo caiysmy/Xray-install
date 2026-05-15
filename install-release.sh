@@ -700,15 +700,16 @@ install_geodata() {
       exit 1
     fi
   }
-  local download_link_geoip="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
+  local download_link_geoip="https://github.com/Loyalsoldier/geoip/releases/latest/download/geoip-only-cn-private.dat"
   local download_link_geosite="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
+  local file_ip_dl='geoip-only-cn-private.dat'
   local file_ip='geoip.dat'
   local file_dlc='geosite.dat'
   local file_site='geosite.dat'
   local dir_tmp
   dir_tmp="$(mktemp -d)"
   [[ "$XRAY_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '0' ]] && echo "warning: Xray was not installed"
-  download_geodata $download_link_geoip $file_ip
+  download_geodata $download_link_geoip $file_ip_dl
   download_geodata $download_link_geosite $file_dlc
   cd "${dir_tmp}" || exit
   for i in "${dir_tmp}"/*.sha256sum; do
@@ -720,7 +721,7 @@ install_geodata() {
   cd - >/dev/null || exit 1
   install -d "$DAT_PATH"
   install -m 644 "${dir_tmp}"/${file_dlc} "${DAT_PATH}"/${file_site}
-  install -m 644 "${dir_tmp}"/${file_ip} "${DAT_PATH}"/${file_ip}
+  install -m 644 "${dir_tmp}"/${file_ip_dl} "${DAT_PATH}"/${file_ip}
   rm -r "${dir_tmp}"
   exit 0
 }
