@@ -782,7 +782,6 @@ check_geodata_requirements() {
 }
 
 update_geodata() {
-  check_geodata_requirements
   install_software 'curl' 'curl'
   install_software 'gzip' 'gzip'
   download_geodata() {
@@ -816,9 +815,9 @@ update_geodata() {
     echo 'error: Geodata decompression failed.'
     exit 1
   fi
-  install_geodata_dir
-  install -m 644 -o xray -g xray "${dir_tmp}/${file_site%.gz}" "${DAT_PATH}/geosite.dat"
-  install -m 644 -o xray -g xray "${dir_tmp}/${file_ip%.gz}" "${DAT_PATH}/geoip.dat"
+  install -d -m 755 "$DAT_PATH"
+  install -m 644 "${dir_tmp}/${file_site%.gz}" "${DAT_PATH}/geosite.dat"
+  install -m 644 "${dir_tmp}/${file_ip%.gz}" "${DAT_PATH}/geoip.dat"
   echo 'info: Geodata is updated. You may need to restart Xray for the changes to take effect.'
   exit 0
 }
